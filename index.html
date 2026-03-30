@@ -1,116 +1,53 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Untuk Resty ❤️</title>
-<style>
-body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background: radial-gradient(circle at top, #1a1a2e, #0f0f1a);
-  color: white;
-  overflow: hidden;
-}
-
-.star { position:absolute;width:2px;height:2px;background:white;animation:twinkle 2s infinite alternate; }
-@keyframes twinkle { from{opacity:0.2;} to{opacity:1;} }
-
-.heart { position:absolute;color:#ff4d6d;animation:fall linear infinite; }
-@keyframes fall { 0%{transform:translateY(-10vh);}100%{transform:translateY(110vh);} }
-
-.confetti { position:absolute;width:8px;height:8px;background:hsl(calc(360 * var(--i)),100%,50%);animation:confettiFall 3s linear infinite; }
-@keyframes confettiFall { 0%{transform:translateY(-10vh) rotate(0);}100%{transform:translateY(110vh) rotate(360deg);} }
-
-.slide { display:none;height:100vh;justify-content:center;align-items:center;flex-direction:column;text-align:center;padding:20px; }
-.active { display:flex; }
-
-button { margin-top:20px;padding:10px 20px;border:none;border-radius:10px;cursor:pointer; }
-.next { background:#ff4d6d;color:white; }
-.yes { background:#4CAF50;color:white; }
-.no { background:#f44336;color:white; }
-
-.cupid {
-  width:120px;
-  margin-bottom:20px;
-}
-</style>
+  <meta charset="UTF-8">
+  <title>Mau Jadi Pacarku?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root{ --bg:#fff7fb; --pink:#e91e63; --ok:#43a047; --no:#f4511e }
+    body{
+      margin:0; min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+      background:var(--bg); font-family:system-ui, -apple-system, Segoe UI, Roboto, sans-serif; color:#7a0040; text-align:center; overflow:hidden; padding:24px;
+    }
+    h1{ font-size:36px; margin:0 0 10px }
+    p{ margin:0 0 18px }
+    .board{ position:relative; width:min(560px, 92vw); height:260px; border-radius:20px; background:#fff; box-shadow:0 12px 28px rgba(233,30,99,.15); display:flex; align-items:center; justify-content:center; gap:16px; margin-top:8px }
+    button{ border:0; padding:10px 16px; border-radius:12px; cursor:pointer; font-weight:600; transition:.2s }
+    #mau{ background:var(--ok); color:#fff }
+    #gamau{ background:var(--no); color:#fff; position:absolute; }
+    #mau:hover{ transform:translateY(-2px) }
+  </style>
 </head>
 <body>
+  <h1>Mau nggak jadi pacarku? 😁✨</h1>
+  <p>Pilih jujur ya… hati-hati tombolnya nakal 😜</p>
 
-<!-- AUDIO (FIX AUTOPLAY) -->
-<audio id="bgMusic" loop>
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
-</audio>
+  <div class="board" id="board">
+    <button id="mau">Mau! 💚</button>
+    <button id="gamau">Gamau 🙅‍♀️</button>
+  </div>
 
-<script>
-// play music after first click (WAJIB biar jalan di browser)
-document.addEventListener('click', function () {
-  const music = document.getElementById('bgMusic');
-  if (music.paused) {
-    music.play();
-  }
-}, { once: true });
+  <script>
+    const board = document.getElementById('board');
+    const gamau = document.getElementById('gamau');
+    const mau = document.getElementById('mau');
 
-// stars
-for(let i=0;i<80;i++){let s=document.createElement('div');s.className='star';s.style.top=Math.random()*100+'vh';s.style.left=Math.random()*100+'vw';document.body.appendChild(s);} 
+    // Posisi awal "Gamau"
+    const setRandom = () => {
+      const pad = 8;
+      const rect = board.getBoundingClientRect();
+      const x = Math.random() * (rect.width - 100 - pad*2) + pad;
+      const y = Math.random() * (rect.height - 44 - pad*2) + pad;
+      gamau.style.left = x + 'px';
+      gamau.style.top  = y + 'px';
+    };
+    setRandom();
 
-// hearts
-for(let i=0;i<20;i++){let h=document.createElement('div');h.className='heart';h.innerHTML='❤';h.style.left=Math.random()*100+'vw';h.style.animationDuration=(3+Math.random()*5)+'s';document.body.appendChild(h);} 
-</script>
+    gamau.addEventListener('mouseenter', setRandom);
+    gamau.addEventListener('click', setRandom);
 
-<!-- Slide 1 -->
-<div class="slide active" id="slide1">
-  <img class="cupid" src="https://i.imgur.com/3ZQ3Z6K.png">
-  <h1>Hai Resty ❤️</h1>
-  <p>Kamu itu spesial banget buat aku... dari awal kenal, aku udah ngerasa beda 🥺</p>
-  <button class="next" onclick="nextSlide(2)">Lanjut ➡️</button>
-</div>
-
-<!-- Slide 2 -->
-<div class="slide" id="slide2">
-  <img class="cupid" src="https://i.imgur.com/3ZQ3Z6K.png">
-  <h1>Tentang Kita 💫</h1>
-  <p>Aku nyaman sama kamu... dan aku pengen kita jadi sesuatu yang lebih dari ini 😌</p>
-  <button class="next" onclick="nextSlide(3)">Lanjut ➡️</button>
-</div>
-
-<!-- Slide 3 -->
-<div class="slide" id="slide3">
-  <img class="cupid" src="https://i.imgur.com/3ZQ3Z6K.png">
-  <h1>Jadi... ❤️</h1>
-  <p>Mau nggak kamu jadi pacarku?</p>
-  <button class="yes" onclick="jawabYes()">Mau 💖</button>
-  <button class="no" onclick="jawabNo()">Nggak 😢</button>
-</div>
-
-<script>
-function nextSlide(n){
-  document.querySelectorAll('.slide').forEach(s=>s.classList.remove('active'));
-  document.getElementById('slide'+n).classList.add('active');
-}
-
-function typingEffect(text, el, i=0){ 
-  if(i<text.length){ 
-    el.innerHTML += text.charAt(i); 
-    setTimeout(()=>typingEffect(text,el,i+1),50);
-  }
-}
-
-function jawabYes(){
-  document.body.innerHTML = "<h1 id='loveText' style='text-align:center;margin-top:40vh;'></h1>";
-  const text = "I love you, Resty ❤️ - Ricky";
-  const el = document.getElementById('loveText');
-  typingEffect(text, el);
-
-  // confetti
-  for(let i=0;i<120;i++){let c=document.createElement('div');c.className='confetti';c.style.left=Math.random()*100+'vw';c.style.setProperty('--i',Math.random());c.style.animationDuration=(2+Math.random()*3)+'s';document.body.appendChild(c);}  
-}
-
-function jawabNo(){
-  document.body.innerHTML = "<h1 style='text-align:center;margin-top:40vh;'>Gapapa Resty 😢❤️ Makasih udah jujur - Ricky</h1>";
-}
-</script>
-
+    mau.addEventListener('click', ()=>alert('Yeay! Kamu resmi jadi kebahagiaanku! 💖'));
+  </script>
 </body>
 </html>
